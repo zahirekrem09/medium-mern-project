@@ -27,8 +27,16 @@ app.use("/api", router);
 //Error Handler
 app.use(customErrorHandler);
 //Static Files
-app.use(express.static('../build'));
+// app.use(express.static('../build'));
 
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../build"));
+  app.get("*", (req, res) => {
+    // res.sendFile(path.resolve(__dirname, "build", "index.html"));
+    res.sendFile(path.join(__dirname, "../build/index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`App started on ${PORT} - ${NODE_ENV}`);

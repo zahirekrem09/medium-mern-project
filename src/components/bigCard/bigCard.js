@@ -18,7 +18,6 @@ const BigCard = (props) => {
     modalIsOpen,
     setIsOpen,
   } = useContext(UserContext);
-
   async function removeBookmark() {
     let token = localStorage.getItem("token");
     const undoLikeData = await axios.get(
@@ -29,10 +28,8 @@ const BigCard = (props) => {
         },
       }
     );
-
     setUserData({ user: undoLikeData.data.currentUser, token });
   }
-
   async function addBookmark() {
     let token = localStorage.getItem("token");
     const likeData = await axios.get(
@@ -43,26 +40,21 @@ const BigCard = (props) => {
         },
       }
     );
-
     setUserData({ user: likeData.data.currentUser, token });
   }
-
   function modalOpen() {
     if (!userData?.user?._id) {
       setIsOpen(true);
     }
   }
-
   const handleOnClick = () => {
     userData?.user
       ? history.push(`/profileDetail/${props.authorId}`)
       : modalOpen();
   };
-
   const handleOnClickArticle = () => {
     userData?.user ? history.push(`/articleDetail/${props.id}`) : modalOpen();
   };
-
   return (
     <div className="bigcard-container">
       <div className="bigtext-container">
@@ -99,5 +91,4 @@ const BigCard = (props) => {
     </div>
   );
 };
-
 export default BigCard;
